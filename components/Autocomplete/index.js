@@ -148,7 +148,7 @@ class Autocomplete extends Component {
             <Fragment>
                 <View style={[styles.inputContainerStyle, inputContainerStyle]}>
                     {renderIcon()}
-                    {renderInput(/* red */ this.container, this.handleInputChange(text) /* onChange */, this.handleBlur(event) /* onBlur */, scrollToInput(findNodeHandle(event.target)) /* onFocus */)}
+                    {renderInput(/* ref */ this.container, this.handleInputChange /* onChange */, this.handleBlur /* onBlur */, () => scrollToInput(findNodeHandle(event.target)) /* onFocus */)}
                     {loading && (
                         <ActivityIndicator
                             style={[styles.spinner, spinnerStyle]}
