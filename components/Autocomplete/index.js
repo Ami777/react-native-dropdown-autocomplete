@@ -57,7 +57,7 @@ class Autocomplete extends Component {
 
     async triggerChange() {
         const {inputValue, items} = this.state;
-        const {fetchDataUrl, valueExtractor} = this.props;
+        const {fetchDataUrl, valueExtractor, data} = this.props;
         if (fetchDataUrl) {
             try {
                 const response = await get(fetchDataUrl, {search: inputValue});
@@ -73,7 +73,7 @@ class Autocomplete extends Component {
                 throw new Error(error);
             }
         } else {
-            const filteredItems = items.filter(item => {
+            const filteredItems = data.filter(item => {
                 return (
                     valueExtractor(item)
                         .toLowerCase()
@@ -148,7 +148,7 @@ class Autocomplete extends Component {
             <Fragment>
                 <View style={[styles.inputContainerStyle, inputContainerStyle]}>
                     {renderIcon()}
-                    {renderInput(/* ref */ this.container, this.handleInputChange /* onChange */, this.handleBlur /* onBlur */, event => scrollToInput(findNodeHandle(event.target)) /* onFocus */)}
+                    {renderInput(/* ref */ ref => this.container = ref, this.handleInputChange /* onChange */, this.handleBlur /* onBlur */, event => scrollToInput(findNodeHandle(event.target)) /* onFocus */)}
                     {loading && (
                         <ActivityIndicator
                             style={[styles.spinner, spinnerStyle]}
@@ -157,19 +157,17 @@ class Autocomplete extends Component {
                         />
                     )}
                 </View>
-                {items && items.length > 0 && (
-                    <Dropdown
-                        ref={ref => {
-                            this.dropdown = ref;
-                        }}
-                        dropdownPosition={0}
-                        data={data ? filteredItems : items}
-                        listHeader={listHeader}
-                        inputValue={inputValue}
-                        onChangeValue={this.setItem}
-                        {...dropdownProps}
-                    />
-                )}
+                <Dropdown
+                    ref={ref => {
+                        this.dropdown = ref;
+                    }}
+                    dropdownPosition={0}
+                    data={data ? filteredItems : items}
+                    listHeader={listHeader}
+                    inputValue={inputValue}
+                    onChangeValue={this.setItem}
+                    {...dropdownProps}
+                />
             </Fragment>
         );
     }
