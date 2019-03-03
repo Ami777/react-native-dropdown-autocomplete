@@ -157,17 +157,19 @@ class Autocomplete extends Component {
                         />
                     )}
                 </View>
-                <Dropdown
-                    ref={ref => {
-                        this.dropdown = ref;
-                    }}
-                    dropdownPosition={0}
-                    data={data ? filteredItems : items}
-                    listHeader={listHeader}
-                    inputValue={inputValue}
-                    onChangeValue={this.setItem}
-                    {...dropdownProps}
-                />
+                {items && items.length > 0 && (
+                    <Dropdown
+                        ref={ref => {
+                            this.dropdown = ref;
+                        }}
+                        dropdownPosition={0}
+                        data={data ? filteredItems : items}
+                        listHeader={listHeader}
+                        inputValue={inputValue}
+                        onChangeValue={this.setItem}
+                        {...dropdownProps}
+                    />
+                )}
             </Fragment>
         );
     }

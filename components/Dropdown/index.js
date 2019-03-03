@@ -488,6 +488,7 @@ export default class Dropdown extends PureComponent {
           onRequestClose={this.blur}
           supportedOrientations={supportedOrientations}
         >
+
           <TouchableOpacity
             onPress={this.blur}
             style={[styles.overlay, overlayStyleOverrides]}
